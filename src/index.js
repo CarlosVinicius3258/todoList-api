@@ -1,5 +1,6 @@
 const express = require("express");
 const mongooose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 const routes = require("./routes");
@@ -10,6 +11,7 @@ mongooose.connect("mongodb://localhost/todos", {
   useUnifiedTopology: true,
 });
 
+app.use(cors());
 app.use(express.json());
 app.use(routes);
 app.set("PORT", PORT);
