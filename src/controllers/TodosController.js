@@ -1,6 +1,4 @@
 const Todo = require("../models/Todo");
-//TODO: create update method
-//TODO: create delete method
 class TodosController {
   constructor(dao) {
     this.dao = dao;
@@ -20,6 +18,7 @@ class TodosController {
 
   update = async (req, res) => {
     const { id } = req.params;
+    console.log("id: ", id);
     const todoFound = await this.dao.findById(id, "descr checked");
     const foundChecked = todoFound.checked;
     const todo = await this.dao.findByIdAndUpdate(
@@ -29,13 +28,15 @@ class TodosController {
       },
       { new: true }
     );
+    //console.log(todo);
     return res.json(todo);
   };
 
   delete = async (req, res) => {
     const { id } = req.params;
-    const todo = await this.dao.deleteOne({ _id: id });
-    return res.json(todo);
+    console.log("id: ", id);
+    await this.dao.deleteOne({ _id: id });
+    return res.json(id);
   };
 }
 
